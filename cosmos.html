@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Sign Up page for Cosmos</title>
+  <link href = "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel = "stylesheet" >
+  <link href ="https://fonts.googleapis.com/css2?family=Alata&family=Kanit:wght@500&display=swap" rel="stylesheet">
+  <script src=" http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js "></script>
+</head>
+<body>
+  
+      <div class = "container">
+        <div class = "content">
+          <form  id = "cosmos-form" method = "post" > 
+          <h3 style = 'color : white'>  Sign Up For Cosmos  </h3>
+          <div class = "inputs-div">
+            <input type = "text" class = "input" placeholder ="First Name" id = "FirstName"/>
+            <input type = "text" class = "input" placeholder ="Last Name" id = "LastName"/>
+            <input type = "text" class = "input" placeholder = "Email" id = "UserEmail"/>
+            
+          </div>
+          <div class ="btn">
+            <input type ="submit" value = "Sign Up"/>
+            </form>
+          </div>
+          
+          </div>  
+        <script>
+    $("#FirstName").focus();
+    function validateAndGetData(){
+      var FirstNameVar = $("#FirstName").val();
+      if (FirstNameVar === ""){
+        alert("First Name Req");
+        $("#FirstName").focus();
+        return "" ;
+      }
+      var LastNameVar = $("#LastName").val();
+      if (LastNameVar === ""){
+        alert("Last name is required");
+        $("#LastName").focus();
+        return "" ;
+      }
+      var UserEmailVar = $("#UserEmail").val();
+      if(UserEmailVar === ""){
+        alert("Email is required");
+        $("#UserEmail").focus();
+        return "" ;
+      }
+      var jsonStrObj = {
+        FirstName : FirstNameVar,
+        LastName : LastNameVar,
+        UserEmail : UserEmailVar,
+      };
+      return JSON.stringfy(jsonStrObj)
+        
+        
+      }
+    function saveInfo(){
+      var jsonStr = validateAndGetData();
+      if (jsonStr === ""){
+        return;
+      }
+      var putReqStr = createPUTRequest("90935511|-31948800400083908|90931967", jsonStr, "Cosmos","Cosmos-Rel" ); 
+      alert(putReqStr);
+      jquery.ajaxSetup({async:false});
+      var resultObj =  executeCommand(putReqStr,"http://api.login2explore.com:5577", "/api/iml");
+      alert(JSON.stringfy(resultObj));
+      jQuery.ajaxSetup({async : true});
+      resetForm();
+    }
+      
+  </script>
+</body>
+</html>
